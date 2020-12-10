@@ -3,6 +3,7 @@ import { TextField, Button, Container, Avatar, Typography } from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useFormik } from 'formik';
 
 
 const stylesFunc = makeStyles((theme) => ({
@@ -26,6 +27,18 @@ const stylesFunc = makeStyles((theme) => ({
 const Signup = () => {
     const signupStyles = stylesFunc();
 
+
+    const formik = useFormik({
+        initialValues: {
+          displayName: '',
+          email: '',
+          password: '',
+        },
+        onSubmit: values => {
+          alert(JSON.stringify(values, null, 2));
+        },
+      });
+
     return (
 
         <Container className={signupStyles.wrapper} maxWidth="sm">
@@ -35,49 +48,58 @@ const Signup = () => {
             <Avatar className={signupStyles.avatar}>
                 <LockOutlinedIcon />
             </Avatar>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <TextField
-                        name="displayName"
-                        label="displayName"
-                        variant="outlined"
-                        fullWidth
-                    />      
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        name="email"
-                        label="Email"
-                        variant="outlined"
-                        fullWidth
-                    />
-                    <TextField
-                        name="password"
-                        label="Password"
-                        variant="outlined"
-                        type="password"
-                        fullWidth
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                    >
-                        Primary
+            <form onSubmit={formik.handleSubmit}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <TextField
+                            name="displayName"
+                            label="displayName"
+                            variant="outlined"
+                            fullWidth
+                            onChange={formik.handleChange}
+                            value={formik.values.displayName}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            name="email"
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                        />
+                        <TextField
+                            name="password"
+                            label="Password"
+                            variant="outlined"
+                            type="password"
+                            fullWidth
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            type='submit'
+                        >
+                            Register
                     </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        fullWidth
-                    >
-                        Secondary
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            fullWidth
+                        >
+                            Register with Google
                     </Button>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </form>
         </Container>
     )
 }
