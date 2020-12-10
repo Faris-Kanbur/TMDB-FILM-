@@ -42,7 +42,7 @@ const Signup = () => {
       });
 
       const handleGoogleButtonClick = () =>{
-          Firebase.useGoogleProvider();
+          Firebase.useGoogleProvider()
       };
 
 

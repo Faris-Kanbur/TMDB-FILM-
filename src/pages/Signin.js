@@ -1,8 +1,10 @@
 import React from 'react';
+import Firebase from '../firebase/firebase.utils'
 import { TextField, Button, Container, Avatar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { Formik } from 'formik';
 
 
 const stylesFunc = makeStyles((theme) => ({
@@ -20,59 +22,87 @@ const stylesFunc = makeStyles((theme) => ({
     },
 }));
 
+const initialValues = {
+    email: '',
+    password: '',
+};
 
 
 
 const Signin = () => {
-    const signupStyles = stylesFunc();
+    const signinStyles = stylesFunc();
+
+      const handleGoogleButtonClick = () =>{
+          Firebase.useGoogleProvider();
+      };
+
+      const handleFormSubmit = (values) => {
+        alert(JSON.stringify(values, null, 2));
+      }
 
     return (
 
-        <Container className={signupStyles.wrapper} maxWidth="sm">
-            <Typography className={signupStyles.signUp} variant="h4">
+        <Container className={signinStyles.wrapper} maxWidth="sm">
+            <Typography className={signinStyles.signUp} variant="h4">
                 Sign In
             </Typography>
-            <Avatar className={signupStyles.avatar}>
+            <Avatar className={signinStyles.avatar}>
                 <LockOutlinedIcon />
             </Avatar>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <TextField
-                        name="displayName"
-                        label="Display Name"
-                        variant="outlined"
-                        fullWidth
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleFormSubmit}
+            >
 
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        name="email"
-                        label="Email"
-                        variant="outlined"
-                        fullWidth
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                    >
-                        Primary
+                {({handleSubmit, values,handleChange}) => (
+                 <form onSubmit={handleSubmit} >
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <TextField
+                            name="email"
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            value={values.email}
+                            onChange={handleChange}
+
+                        />
+                        <TextField
+                            name="password"
+                            label="Password"
+                            variant="outlined"
+                            type="password"
+                            fullWidth
+                            value={values.password}
+                            onChange={handleChange}
+      
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            type='submit'
+                        >
+                            Sing In
                     </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        fullWidth
-                    >
-                        Secondary
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            fullWidth
+                            onClick={handleGoogleButtonClick}
+                        >
+                            Register with Google
                     </Button>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </form>
+            )}
+            </Formik>
+       </Container>
     )
 }
 
