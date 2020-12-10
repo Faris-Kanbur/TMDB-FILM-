@@ -1,4 +1,5 @@
 import React from 'react';
+import Firebase from '../firebase/firebase.utils'
 import { TextField, Button, Container, Avatar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -35,9 +36,16 @@ const Signup = () => {
           password: '',
         },
         onSubmit: values => {
-          alert(JSON.stringify(values, null, 2));
+        //   alert(JSON.stringify(values, null, 2));
+        Firebase.register(values.displayName, values.email, values.password);
         },
       });
+
+      const handleGoogleButtonClick = () =>{
+          Firebase.useGoogleProvider();
+      };
+
+
 
     return (
 
@@ -94,6 +102,7 @@ const Signup = () => {
                             variant="contained"
                             color="secondary"
                             fullWidth
+                            onClick={handleGoogleButtonClick}
                         >
                             Register with Google
                     </Button>

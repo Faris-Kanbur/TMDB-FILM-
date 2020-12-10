@@ -9,7 +9,7 @@ function AuthContextProvider(props) {
 
     useEffect(() => {
        
-    firebase.firebaseAuth.onAuthStateChanged((user) =>{
+    firebase.firebaseAuth.onAuthStateChanged((user) => {
         setCurrentUser(user);
     });     
         
