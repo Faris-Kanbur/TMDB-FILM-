@@ -37,7 +37,8 @@ const Signin = () => {
       };
 
       const handleFormSubmit = (values) => {
-        alert(JSON.stringify(values, null, 2));
+        // alert(JSON.stringify(values, null, 2));
+        Firebase.signin(values.email, values.password)
       }
 
     return (

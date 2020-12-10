@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useFormik } from 'formik';
+import { useHistory } from "react-router-dom";
+
 
 
 const stylesFunc = makeStyles((theme) => ({
@@ -27,7 +29,7 @@ const stylesFunc = makeStyles((theme) => ({
 
 const Signup = () => {
     const signupStyles = stylesFunc();
-
+    const history = useHistory();
 
     const formik = useFormik({
         initialValues: {
@@ -38,6 +40,7 @@ const Signup = () => {
         onSubmit: values => {
         //   alert(JSON.stringify(values, null, 2));
         Firebase.register(values.displayName, values.email, values.password);
+        history.push("/login");
         },
       });
 
